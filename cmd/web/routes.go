@@ -9,16 +9,20 @@ import (
 )
 
 func (app *application) routes() http.Handler {
-	multiplexer := chi.NewRouter();
+	multiplexer := chi.NewRouter()
 
-	multiplexer.Use(middleware.Recoverer);
-	multiplexer.Use(middleware.Timeout(60 * time.Second));
+	multiplexer.Use(middleware.Recoverer)
+	multiplexer.Use(middleware.Timeout(60 * time.Second))
 
 	fileServer := http.FileServer(http.Dir("./static"))
 	multiplexer.Handle("/static/*", http.StripPrefix("/static/", fileServer))
-	
+
+	multiplexer.Get("/test-patterns", app.TestPatterns)
+	multiplexer.Get("/api/dog-from-factory", app.CreateDogFromFactory)
+	multiplexer.Get("/api/cat-from-factory", app.CreateCatFromFactory)
+
 	multiplexer.Get("/", app.ShowHome)
 	multiplexer.Get("/{page}", app.ShowPage)
 
-	return multiplexer;
+	return multiplexer
 }
