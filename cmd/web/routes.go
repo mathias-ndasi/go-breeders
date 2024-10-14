@@ -20,6 +20,8 @@ func (app *application) routes() http.Handler {
 	multiplexer.Get("/test-patterns", app.TestPatterns)
 	multiplexer.Get("/api/dog-from-factory", app.CreateDogFromFactory)
 	multiplexer.Get("/api/cat-from-factory", app.CreateCatFromFactory)
+	multiplexer.Get("/api/dog-from-abstract-factory", app.CreateDogFromAbstractFactory)
+	multiplexer.Get("/api/cat-from-abstract-factory", app.CreateCatFromAbstractFactory)
 
 	multiplexer.Get("/", app.ShowHome)
 	multiplexer.Get("/{page}", app.ShowPage)
